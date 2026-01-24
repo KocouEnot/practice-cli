@@ -9,6 +9,7 @@
       "ESNext.Iterator",
       "ESNext.Promise"
     ],
+    "outDir": "dist",
     "module": "nodenext",
     "target": "es2024",
     "strict": true,
