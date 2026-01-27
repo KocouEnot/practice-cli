@@ -29,8 +29,9 @@ program
 
 program
     .command('add <numbers...>')
-    .action((numbers: number[]) => {
-        const total = numbers.reduce((a, b) => a + b, 0)
+    .action((numbers: string[]) => {
+        const nums: number[] = numbers.map(Number)
+        const total = nums.reduce((a, b) => a + b, 0)
         console.log(`Total: ${total}`)
     })
     .description('Add numbers and log the total')
