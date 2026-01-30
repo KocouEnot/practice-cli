@@ -2,47 +2,24 @@
 
 import { Command } from 'commander'
 
+import { registerSayCommand } from './commands/say'
+import { registerAddCommand } from './commands/add'
+import { registerGetMaxNumberCommand } from './commands/getMaxNumber'
+import { version } from '../package.json'
+
 // Declare the program
 
 const program = new Command()
 
-// Add actions into that CLI
-
 program
-    .argument('<string>', 'string to split')
-    .option("-c, --capitalize", "Capitalize the message")
-    .action(
-        (
-            message: string,
-            opts: {
-                capitalize?: boolean
-            },
-        ) => {
-            if (opts.capitalize) {
-                console.log(message.toUpperCase())
-            } else {
-                console.log(message)
-            }
-        },
-    )
-    .description('Say hello')
+    .option('-v, --verbose', 'Show detailed output')
+    .name('practice')
+    .description('My practice CLI')
+    .version(version)
 
-program
-    .command('add <numbers...>')
-    .action((numbers: string[]) => {
-        const nums: number[] = numbers.map(Number)
-        const total = nums.reduce((a, b) => a + b, 0)
-        console.log(`Total: ${total}`)
-    })
-    .description('Add numbers and log the total')
-
-program
-    .command('get-max-number <numbers...>')
-    .action((numbers: number[]) => {
-        const max = Math.max(...numbers)
-        console.log(`Max: ${max}`)
-    })
-    .description('Add numbers and log the total')
+registerSayCommand(program)
+registerAddCommand(program)
+registerGetMaxNumberCommand(program)
 
 
 // Execute the CLI with the given arguments
