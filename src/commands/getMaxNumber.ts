@@ -1,37 +1,31 @@
-#!/usr/bin/env node
-
 import { Command } from 'commander'
+import { getLogger } from "../logger"
+
 
 export function registerGetMaxNumberCommand(program: Command) {
     program
         .command('get-max-number <numbers...>')
         .description('Print max number from list')
         .action((numbers: string[]) => {
-            const { verbose } = program.opts<{ verbose?: boolean }>()
+            const log = getLogger(program)
 
-            if (verbose) {
-                console.error('[get-max-number] command started')
-                console.error('[get-max-number] raw args:', numbers)
-            }
+            log.debug('[get-max-number] command started')
+            log.debug('[get-max-number] raw args:', numbers)
 
             const nums = numbers.map(Number)
 
             if (nums.some(Number.isNaN)) {
-                console.error('Error: all arguments must be numbers')
+                log.error('Error: all arguments must be numbers')
                 process.exitCode = 1
                 return
             }
 
-            if (verbose) {
-                console.error('[get-max-number] parsed numbers:', nums)
-            }
+            log.debug('[get-max-number] parsed numbers:', nums)
 
             const maxNum = Math.max(...nums)
 
-            if (verbose) {
-                console.error('[get-max-number] result:', maxNum)
-            }
+            log.debug('[get-max-number] result:', maxNum)
 
-            console.log(`Max: ${maxNum}`)
+            console.log(maxNum)
         })
 }

@@ -7,6 +7,7 @@
   "main": "index.js",
   "scripts": {
     "link-cli": "(yarn --global unlink practice-cli || true) && chmod +x ./dist/index.js && yarn --global link",
+    "build": "tsc",
     "dev": "tsc -w"
   },
   "keywords": [],

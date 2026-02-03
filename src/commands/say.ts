@@ -1,6 +1,6 @@
-#!/usr/bin/env node
-
 import { Command } from 'commander'
+import { getLogger } from "../logger"
+
 
 export function registerSayCommand(program: Command) {
     program
@@ -9,23 +9,18 @@ export function registerSayCommand(program: Command) {
         .description('Print message')
         .action(
             (message: string, opts: { capitalize?: boolean }) => {
-                const { verbose } = program.opts<{ verbose?: boolean }>()
+                const log = getLogger(program)
 
-                if (verbose) {
-                    console.error('[say] command started')
-                    console.error('[say] message received:', message)
-                }
+                log.debug('[say] command started')
+                log.debug('[say] message received:', message)
+
 
                 if (opts.capitalize) {
-                    if (verbose) {
-                        console.error('[say] received the flag --capitalize (-c)')
-                        console.error('[say] result:', message.toUpperCase())
-                    }
+                    log.debug('[say] received the flag --capitalize (-c)')
+                    log.debug('[say] result:', message.toUpperCase())
                     console.log(message.toUpperCase())
                 } else {
-                    if (verbose) {
-                        console.error('[say] result:', message)
-                    }
+                    log.debug('[say] result:', message)
                     console.log(message)
                 }
             }
